@@ -96,14 +96,19 @@
         <div>
           <p class="eyebrow">PRÊT À ESSAYER ?</p>
           <h2>Tout commence<br>avec Zercraft.</h2>
-          <p>Récupérez l’installateur Windows depuis les Releases GitHub. Vérifiez les détails de version avant l’installation.</p>
+          <p>Téléchargez l’installateur Windows depuis la Release GitHub. La commande PowerShell vérifie son SHA-256 avant de le lancer.</p>
           <a class="button button-light" href="https://github.com/anormadaise2-ops/bootable-usb-creator/releases/latest">
             Voir les téléchargements <span aria-hidden="true">↗</span>
           </a>
           <button class="copy-command" type="button" data-copy-command>
-            Copier la commande PowerShell pour ouvrir ce site
+            Copier la commande PowerShell d’installation vérifiée
           </button>
           <span class="copy-status" aria-live="polite"></span>
+          <p class="command-note">La commande récupère les deux fichiers de la Release officielle, compare leur somme SHA-256, puis ouvre l’installateur. Aucun script distant n’est exécuté.</p>
+          <details class="command-details">
+            <summary>Afficher la commande PowerShell</summary>
+            <pre><code data-install-command></code></pre>
+          </details>
         </div>
         <div class="download-orbit" aria-hidden="true">
           <div class="download-ring"><span>↓</span></div>
@@ -114,21 +119,34 @@
 
     <section class="section sources" id="sources">
       <div class="section-heading">
-        <p class="eyebrow">PAS DE MIROIR INCONNU</p>
-        <h2>Les ISO, chez leurs éditeurs.</h2>
-        <p>Les téléchargements et noms de marques restent la propriété de leurs auteurs. Consultez leurs pages pour les versions et conditions à jour.</p>
+        <p class="eyebrow">UN CATALOGUE CURATÉ, DES SOURCES OFFICIELLES</p>
+        <h2>Choisissez votre système.</h2>
+        <p>Zercraft propose des distributions Linux maintenues et la page Microsoft pour la version courante de Windows 11. Les ISO restent hébergées par leurs éditeurs.</p>
       </div>
       <div class="source-list">
         <a href="https://www.microsoft.com/software-download/windows11" target="_blank" rel="noopener noreferrer">
-          <span class="source-mark windows-mark">⊞</span><span><b>Windows 11</b><small>Microsoft · page de téléchargement officielle</small></span><span class="source-arrow">↗</span>
+          <span class="source-mark windows-mark">⊞</span><span><b>Windows 11 26H2</b><small>Microsoft · lien ISO généré sur le site officiel</small></span><span class="source-arrow">↗</span>
         </a>
         <a href="https://releases.ubuntu.com/" target="_blank" rel="noopener noreferrer">
-          <span class="source-mark ubuntu-mark">●</span><span><b>Ubuntu</b><small>Canonical · images et sommes de contrôle</small></span><span class="source-arrow">↗</span>
+          <span class="source-mark ubuntu-mark">●</span><span><b>Ubuntu 26.04.1 LTS</b><small>Canonical · image et SHA-256 officiels</small></span><span class="source-arrow">↗</span>
         </a>
         <a href="https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/" target="_blank" rel="noopener noreferrer">
-          <span class="source-mark debian-mark">◉</span><span><b>Debian</b><small>Debian CD team · images et sommes signées</small></span><span class="source-arrow">↗</span>
+          <span class="source-mark debian-mark">◉</span><span><b>Debian 13.7</b><small>Debian CD team · image et SHA-256 officiels</small></span><span class="source-arrow">↗</span>
+        </a>
+        <a href="https://fedoraproject.org/workstation/download/" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark fedora-mark">◉</span><span><b>Fedora Workstation 44</b><small>Fedora Project · image et manifeste officiels</small></span><span class="source-arrow">↗</span>
+        </a>
+        <a href="https://linuxmint.com/edition.php?id=326" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark mint-mark">●</span><span><b>Linux Mint 22.3 Cinnamon</b><small>Linux Mint · ISO et sommes de contrôle officielles</small></span><span class="source-arrow">↗</span>
+        </a>
+        <a href="https://system76.com/download-pop/" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark pop-mark">✦</span><span><b>Pop!_OS 24.04 LTS</b><small>System76 · éditions Intel/AMD, NVIDIA et ARM</small></span><span class="source-arrow">↗</span>
+        </a>
+        <a href="https://get.opensuse.org/leap/16.1/" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark suse-mark">◇</span><span><b>openSUSE Leap 16.1</b><small>openSUSE · ISO et sommes officielles</small></span><span class="source-arrow">↗</span>
         </a>
       </div>
+      <p class="license-note">Une ISO Windows ne fournit pas de licence gratuite. Une licence Windows valide est nécessaire pour activer le système.</p>
     </section>
 
     <section class="safety">
@@ -139,7 +157,7 @@
 
   <footer class="site-footer">
     <a class="brand" href="#accueil"><span class="brand-mark" aria-hidden="true">Z</span><span>Zercraft</span></a>
-    <p>Un projet indépendant. Windows est une marque de Microsoft ; Ubuntu et Debian sont des marques de leurs propriétaires respectifs.</p>
+    <p>Un projet indépendant. Les marques Windows, Ubuntu, Debian, Fedora, Linux Mint, Pop!_OS et openSUSE appartiennent à leurs propriétaires respectifs.</p>
     <a href="https://github.com/anormadaise2-ops/bootable-usb-creator">Code source sur GitHub ↗</a>
   </footer>
 </body>
