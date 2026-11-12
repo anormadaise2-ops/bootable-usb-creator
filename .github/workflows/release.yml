@@ -39,11 +39,15 @@ jobs:
           $installer = Get-Item "artifacts\ZercraftSetup.exe"
           if ($installer.Length -lt 1000000) { throw "Installer output is unexpectedly small." }
           $installDir = Join-Path $env:LOCALAPPDATA "Programs\Zercraft"
-          $installLog = Join-Path $env:RUNNER_TEMP "Zercraft-install.log"
-          & $installer.FullName /VERYSILENT /SUPPRESSMSGBOXES /NORESTART "/LOG=$installLog"
-          if ($LASTEXITCODE -ne 0) { throw "Silent installer test failed with exit code $LASTEXITCODE" }
+          & $installer.FullName /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG
+          $installExitCode = $LASTEXITCODE
+          Write-Host "Installer exit code: $installExitCode"
+          Write-Host "Expected installation directory: $installDir"
+          Write-Host "LOCALAPPDATA: $env:LOCALAPPDATA"
+          Get-ChildItem -LiteralPath $env:LOCALAPPDATA -Filter "Zercraft.exe" -File -Recurse -ErrorAction SilentlyContinue |
+            Select-Object -First 5 -ExpandProperty FullName
+          if ($installExitCode -ne 0) { throw "Silent installer test failed with exit code $installExitCode" }
           if (-not (Test-Path (Join-Path $installDir "Zercraft.exe"))) {
-            if (Test-Path $installLog) { Get-Content $installLog }
             throw "Silent installation did not produce Zercraft.exe."
           }
           $uninstaller = Join-Path $installDir "unins000.exe"
