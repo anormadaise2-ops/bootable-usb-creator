@@ -39,21 +39,28 @@ jobs:
           $installer = Get-Item "artifacts\ZercraftSetup.exe"
           if ($installer.Length -lt 1000000) { throw "Installer output is unexpectedly small." }
           $installDir = Join-Path $env:LOCALAPPDATA "Programs\Zercraft"
-          & $installer.FullName /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG
-          $installExitCode = $LASTEXITCODE
-          Write-Host "Installer exit code: $installExitCode"
-          Write-Host "Expected installation directory: $installDir"
-          Write-Host "LOCALAPPDATA: $env:LOCALAPPDATA"
-          Get-ChildItem -LiteralPath $env:LOCALAPPDATA -Filter "Zercraft.exe" -File -Recurse -ErrorAction SilentlyContinue |
-            Select-Object -First 5 -ExpandProperty FullName
-          if ($installExitCode -ne 0) { throw "Silent installer test failed with exit code $installExitCode" }
+          $installLog = Join-Path $env:RUNNER_TEMP "Zercraft-install.log"
+          $installProcess = Start-Process -FilePath $installer.FullName -ArgumentList @(
+            "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/LOG=$installLog"
+          ) -Wait -PassThru
+          if ($installProcess.ExitCode -ne 0) {
+            throw "Silent installer test failed with exit code $($installProcess.ExitCode)"
+          }
           if (-not (Test-Path (Join-Path $installDir "Zercraft.exe"))) {
+            if (Test-Path $installLog) { Get-Content $installLog }
             throw "Silent installation did not produce Zercraft.exe."
           }
           $uninstaller = Join-Path $installDir "unins000.exe"
           if (Test-Path $uninstaller) {
-            & $uninstaller /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-            if ($LASTEXITCODE -ne 0) { throw "Silent uninstall test failed with exit code $LASTEXITCODE" }
+            $uninstallProcess = Start-Process -FilePath $uninstaller -ArgumentList @(
+              "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART"
+            ) -Wait -PassThru
+            if ($uninstallProcess.ExitCode -ne 0) {
+              throw "Silent uninstall test failed with exit code $($uninstallProcess.ExitCode)"
+            }
+            if (Test-Path (Join-Path $installDir "Zercraft.exe")) {
+              throw "Silent uninstall left Zercraft.exe behind."
+            }
           }
           $hash = (Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash  ZercraftSetup.exe" | Set-Content "artifacts\SHA256SUMS.txt" -Encoding ascii
