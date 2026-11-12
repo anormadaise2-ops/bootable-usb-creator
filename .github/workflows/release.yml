@@ -38,10 +38,12 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed with exit code $LASTEXITCODE" }
           $installer = Get-Item "artifacts\ZercraftSetup.exe"
           if ($installer.Length -lt 1000000) { throw "Installer output is unexpectedly small." }
-          $installDir = Join-Path $env:RUNNER_TEMP "Zercraft-install-test"
-          & $installer.FullName /VERYSILENT /SUPPRESSMSGBOXES /NORESTART "/DIR=$installDir"
+          $installDir = Join-Path $env:LOCALAPPDATA "Programs\Zercraft"
+          $installLog = Join-Path $env:RUNNER_TEMP "Zercraft-install.log"
+          & $installer.FullName /VERYSILENT /SUPPRESSMSGBOXES /NORESTART "/LOG=$installLog"
           if ($LASTEXITCODE -ne 0) { throw "Silent installer test failed with exit code $LASTEXITCODE" }
           if (-not (Test-Path (Join-Path $installDir "Zercraft.exe"))) {
+            if (Test-Path $installLog) { Get-Content $installLog }
             throw "Silent installation did not produce Zercraft.exe."
           }
           $uninstaller = Join-Path $installDir "unins000.exe"
