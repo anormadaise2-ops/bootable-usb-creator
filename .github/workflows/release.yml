@@ -1,0 +1,65 @@
+name: Build and publish Windows installer
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Test core behavior
+        run: dotnet run --project tests/Zercraft.Tests/Zercraft.Tests.csproj --configuration Release
+      - name: Publish self-contained Windows application
+        run: dotnet publish src/Zercraft.App/Zercraft.App.csproj --configuration Release --runtime win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=None -p:DebugSymbols=false -o artifacts/publish
+      - name: Prepare installer compiler
+        shell: pwsh
+        run: |
+          $compiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $compiler)) {
+            choco install innosetup -y --no-progress
+          }
+          if (-not (Test-Path $compiler)) {
+            throw "Inno Setup compiler was not found."
+          }
+          $version = $env:GITHUB_REF_NAME.TrimStart("v")
+          & $compiler "/DAppVersion=$version" "installer\Zercraft.iss"
+          if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed with exit code $LASTEXITCODE" }
+          $installer = Get-Item "artifacts\ZercraftSetup.exe"
+          if ($installer.Length -lt 1000000) { throw "Installer output is unexpectedly small." }
+          $installDir = Join-Path $env:RUNNER_TEMP "Zercraft-install-test"
+          & $installer.FullName /VERYSILENT /SUPPRESSMSGBOXES /NORESTART "/DIR=$installDir"
+          if ($LASTEXITCODE -ne 0) { throw "Silent installer test failed with exit code $LASTEXITCODE" }
+          if (-not (Test-Path (Join-Path $installDir "Zercraft.exe"))) {
+            throw "Silent installation did not produce Zercraft.exe."
+          }
+          $uninstaller = Join-Path $installDir "unins000.exe"
+          if (Test-Path $uninstaller) {
+            & $uninstaller /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+            if ($LASTEXITCODE -ne 0) { throw "Silent uninstall test failed with exit code $LASTEXITCODE" }
+          }
+          $hash = (Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  ZercraftSetup.exe" | Set-Content "artifacts\SHA256SUMS.txt" -Encoding ascii
+          Compress-Archive -Path "artifacts\publish\Zercraft.exe" -DestinationPath "artifacts\Zercraft-portable.zip" -Force
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          gh release create $env:GITHUB_REF_NAME `
+            artifacts\ZercraftSetup.exe `
+            artifacts\Zercraft-portable.zip `
+            artifacts\SHA256SUMS.txt `
+            --verify-tag `
+            --title "Zercraft $env:GITHUB_REF_NAME" `
+            --notes "Installateur Windows x64 autonome. Vérifiez le SHA-256 avec SHA256SUMS.txt. Cette version n’est pas signée numériquement."

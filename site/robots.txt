@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://anormadaise2-ops.github.io/bootable-usb-creator/sitemap.xml

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Zercraft, l’outil Windows pour préparer des clés USB amorçables et conserver des sauvegardes chiffrées.">
+  <meta name="theme-color" content="#101b33">
+  <meta property="og:title" content="Zercraft — vos clés, vos fichiers, en sécurité">
+  <meta property="og:description" content="Préparez une clé bootable, téléchargez des ISO officielles ou sauvegardez vos fichiers avec chiffrement.">
+  <meta property="og:type" content="website">
+  <title>Zercraft — clés USB et sauvegardes privées</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#accueil" aria-label="Zercraft, accueil">
+      <span class="brand-mark" aria-hidden="true">Z</span>
+      <span>Zercraft</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <a href="#fonctions">Fonctions</a>
+      <a href="#sources">ISO officielles</a>
+      <a class="nav-download" href="https://github.com/anormadaise2-ops/bootable-usb-creator/releases/latest">Télécharger</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> POUR WINDOWS · PAR ZERCRAFT</p>
+        <h1>Vos clés USB.<br><span>En mieux.</span></h1>
+        <p class="hero-lede">Préparez un support de démarrage, gardez vos fichiers chiffrés sur une clé et retrouvez-les quand vous en avez besoin.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://github.com/anormadaise2-ops/bootable-usb-creator/releases/latest">
+            Télécharger pour Windows <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button button-quiet" href="#fonctions">Découvrir Zercraft</a>
+        </div>
+        <p class="fine-print">Windows 10/11 · x64 · Installation personnelle · Code source public</p>
+      </div>
+      <div class="hero-art" aria-label="Illustration d’une clé USB protégée">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="usb-stick">
+          <div class="usb-metal"><i></i><i></i></div>
+          <div class="usb-body"><span class="usb-logo">Z</span><span class="usb-light"></span></div>
+        </div>
+        <div class="float-card card-iso"><span class="card-icon">◈</span><span><b>ISO officielle</b><small>SHA-256 vérifié</small></span><span class="check">✓</span></div>
+        <div class="float-card card-lock"><span class="lock-icon">⌑</span><span><b>Sauvegarde privée</b><small>Chiffrée par votre code</small></span></div>
+        <span class="spark spark-one">✦</span><span class="spark spark-two">✳</span>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Points forts">
+      <span><b>01</b> Simple à utiliser</span>
+      <span><b>02</b> Vos fichiers restent à vous</span>
+      <span><b>03</b> Sources ISO officielles</span>
+      <span><b>04</b> Code source ouvert</span>
+    </section>
+
+    <section class="section features" id="fonctions">
+      <div class="section-heading">
+        <p class="eyebrow">UN OUTIL, PLUSIEURS USAGES</p>
+        <h2>Fait pour les clés USB<br>du quotidien.</h2>
+        <p>Les actions sensibles sont explicites. Zercraft ne lance jamais une écriture disque en arrière-plan.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card feature-blue">
+          <span class="feature-number">01 / DÉMARRER</span>
+          <div class="feature-icon">↗</div>
+          <h3>Créer une clé bootable</h3>
+          <p>Choisissez une ISO, identifiez le disque USB et confirmez son numéro avant l’écriture.</p>
+          <span class="feature-note">L’écriture efface le disque choisi.</span>
+        </article>
+        <article class="feature-card feature-violet">
+          <span class="feature-number">02 / PROTÉGER</span>
+          <div class="feature-icon">⌑</div>
+          <h3>Sauvegarder vos fichiers</h3>
+          <p>Chiffrez une copie avec votre code d’accès. Les originaux ne sont ni déplacés ni supprimés.</p>
+          <span class="feature-note">Restauration dans un nouveau dossier.</span>
+        </article>
+        <article class="feature-card feature-mint">
+          <span class="feature-number">03 / TÉLÉCHARGER</span>
+          <div class="feature-icon">↓</div>
+          <h3>Partir de la bonne source</h3>
+          <p>Téléchargez des images depuis leurs éditeurs officiels et contrôlez leur somme SHA-256.</p>
+          <span class="feature-note">Aucune ISO hébergée par Zercraft.</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section download-section" id="telecharger">
+      <div class="download-panel">
+        <div>
+          <p class="eyebrow">PRÊT À ESSAYER ?</p>
+          <h2>Tout commence<br>avec Zercraft.</h2>
+          <p>Récupérez l’installateur Windows depuis les Releases GitHub. Vérifiez les détails de version avant l’installation.</p>
+          <a class="button button-light" href="https://github.com/anormadaise2-ops/bootable-usb-creator/releases/latest">
+            Voir les téléchargements <span aria-hidden="true">↗</span>
+          </a>
+          <button class="copy-command" type="button" data-copy-command>
+            Copier la commande PowerShell pour ouvrir ce site
+          </button>
+          <span class="copy-status" aria-live="polite"></span>
+        </div>
+        <div class="download-orbit" aria-hidden="true">
+          <div class="download-ring"><span>↓</span></div>
+          <span class="download-dot dot-a"></span><span class="download-dot dot-b"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sources" id="sources">
+      <div class="section-heading">
+        <p class="eyebrow">PAS DE MIROIR INCONNU</p>
+        <h2>Les ISO, chez leurs éditeurs.</h2>
+        <p>Les téléchargements et noms de marques restent la propriété de leurs auteurs. Consultez leurs pages pour les versions et conditions à jour.</p>
+      </div>
+      <div class="source-list">
+        <a href="https://www.microsoft.com/software-download/windows11" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark windows-mark">⊞</span><span><b>Windows 11</b><small>Microsoft · page de téléchargement officielle</small></span><span class="source-arrow">↗</span>
+        </a>
+        <a href="https://releases.ubuntu.com/" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark ubuntu-mark">●</span><span><b>Ubuntu</b><small>Canonical · images et sommes de contrôle</small></span><span class="source-arrow">↗</span>
+        </a>
+        <a href="https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/" target="_blank" rel="noopener noreferrer">
+          <span class="source-mark debian-mark">◉</span><span><b>Debian</b><small>Debian CD team · images et sommes signées</small></span><span class="source-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="safety">
+      <div class="safety-icon">!</div>
+      <div><h2>Un rappel important</h2><p>Créer un support de démarrage efface le disque USB sélectionné. Vérifiez son nom, son numéro et sa capacité, et copiez d’abord ailleurs les données à conserver.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="#accueil"><span class="brand-mark" aria-hidden="true">Z</span><span>Zercraft</span></a>
+    <p>Un projet indépendant. Windows est une marque de Microsoft ; Ubuntu et Debian sont des marques de leurs propriétaires respectifs.</p>
+    <a href="https://github.com/anormadaise2-ops/bootable-usb-creator">Code source sur GitHub ↗</a>
+  </footer>
+</body>
+</html>
